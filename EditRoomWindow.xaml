@@ -1,0 +1,26 @@
+﻿<Window x:Class="Gostinica.EditRoomWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gostinica"
+        mc:Ignorable="d"
+        Title="Редактирование номера" Height="250" Width="350">
+    <Grid Margin="10">
+        <StackPanel>
+            <TextBlock Text="Название:" FontWeight="Bold" Margin="0,10,0,5"/>
+            <TextBox x:Name="tbName" Margin="0,0,0,15"/>
+
+            <TextBlock Text="Вместимость:" FontWeight="Bold" Margin="0,15,0,5"/>
+            <TextBox x:Name="tbCapacity" Margin="0,0,0,15"/>
+
+            <TextBlock Text="Цена за ночь:" FontWeight="Bold" Margin="0,15,0,5"/>
+            <TextBox x:Name="tbPrice" Margin="0,0,0,25"/>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Сохранить" Width="80" Margin="15,15,15,15" Click="btnSave_Click"/>
+                <Button Content="Отмена" Width="80" Margin="15,15,15,15" Click="btnCancel_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

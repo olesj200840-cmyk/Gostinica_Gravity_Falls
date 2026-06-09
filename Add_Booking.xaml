@@ -1,0 +1,28 @@
+﻿<Window x:Class="Gostinica.Add_Booking"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gostinica"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        Title="Бронирование" Height="350" Width="400">
+    <Grid Margin="20">
+        <StackPanel>
+            <TextBlock Text="Данные гостя:" FontWeight="Bold" Margin="0,10,0,5"/>
+
+            <TextBlock Text="Полное имя:"/>
+            <TextBox x:Name="tbFullName" Margin="0,0,0,10" Height="25"/>
+
+            <TextBlock Text="Номер телефона:"/>
+            <TextBox x:Name="tbPhoneNumber" Margin="0,0,0,20" Height="25"/>
+
+            <DatePicker x:Name="dpCheckIn" SelectedDate="{x:Null}" DisplayDateStart="{x:Static sys:DateTime.Today}" Margin="0,0,0,10"/>
+            <DatePicker x:Name="dpCheckOut" SelectedDate="{x:Null}" DisplayDateStart="{x:Static sys:DateTime.Today}" Margin="0,0,0,20"/>
+
+            <Button Content="Забронировать" Width="120" HorizontalAlignment="Right" Click="btnSave_Click" Margin="0,0,0,10"/>
+
+            <Button Content="Отмена" Width="120" HorizontalAlignment="Right" Click="btnCancel_Click" />
+        </StackPanel>
+    </Grid>
+</Window>

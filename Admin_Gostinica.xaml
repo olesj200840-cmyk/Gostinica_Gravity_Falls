@@ -1,0 +1,54 @@
+﻿<Window x:Class="Gostinica.Admin_Gostinica"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gostinica"
+        mc:Ignorable="d"
+        Title="Admin_Gostinica" Height="450" Width="800"
+            ResizeMode="NoResize" WindowStyle="None"
+            WindowStartupLocation="CenterScreen">
+    <Window.Background>
+        <ImageBrush ImageSource="C:\Users\Александр\Desktop\photo\domik1.png"/>
+    </Window.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="550"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Button Height="20" Width="20" Margin="101,1,0,0"
+                Content="x" Foreground="White" 
+                Background="Transparent" Grid.Column="2"
+                Opacity="1" FontSize="6" Click="exit_client_vxod"/>
+        <Grid Grid.Row="1" Grid.Column="1" Opacity="0.9" Background="#315E59" Margin="0,-27,0,0">
+            <ListBox x:Name="listRooms"
+                     Height="400" Margin="0,52,0,0"
+                     SelectionMode="Single"
+         >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="White" />
+                            <TextBlock Grid.Column="1" Text="{Binding StatusDisplay}" Margin="10,0,0,0" Foreground="LightGray" VerticalAlignment="Center"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+        <Button x:Name="redactor_btn" Grid.Column="1" Height="20" Width="100" 
+                Content="Редоктировать" Margin="200,5,0,0" Click="redactor_click"  />
+        <Button x:Name="Add_btn" Grid.Column="1" Height="20" Width="100" 
+                Content="Добавить" Margin="420,5,0,0" Click="Add_click" />
+
+    </Grid>
+</Window>

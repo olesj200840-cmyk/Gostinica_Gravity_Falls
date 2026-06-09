@@ -1,0 +1,86 @@
+﻿<Window x:Class="Gostinica.ClientMain"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gostinica"
+        mc:Ignorable="d"
+        Title="" WindowStyle="None"
+        Height="400" Width="400"  
+        
+        ResizeMode="NoResize">
+    <Window.Background>
+        <ImageBrush ImageSource="C:\Users\Александр\Desktop\von2.png"/>
+    </Window.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="15"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Button Height="12" Width="12" Margin="380,1,0,0"
+                Content="x" Foreground="White" 
+                Background="Transparent"
+                Opacity="1" FontSize="6" Click="exit_client_vxod"/>
+        <Grid Grid.Row="1" Margin="30,15,30,30" Opacity="1" 
+              Background="#344B73">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <TextBlock  Grid.Row="1" TextAlignment="Center" Height="100"
+                        TextWrapping="Wrap"  x:Name="MessageTextBlock"
+                        Text="" FontSize="24" Padding="5" Margin="0,70,0,95"
+                        Foreground="White" FontWeight="Bold"/>
+            <TextBlock x:Name="Privet" Margin="5" 
+                       FontSize="16" Foreground="White"
+                       FontWeight="Bold" TextAlignment="Center" >
+                <Run>Вход в систему клиента</Run>
+                <LineBreak/>
+                <Run FontSize="10"> Найдите котика</Run>
+            </TextBlock>
+
+            <RadioButton x:Name="Accept_button" Height="110" Width="150" 
+                         Margin="10,10,180,110" Grid.Row="1" 
+                         GroupName="ImageGroup">
+                <RadioButton.Content>
+                    <Image Width="130" Height="112"
+                           Source="C:\Users\Александр\Desktop\photo\cat11.png"/>
+                </RadioButton.Content>
+            </RadioButton>
+
+            <RadioButton x:Name="net_button1"  Height="110" Width="150" 
+                         Margin="170,10,20,110" Grid.Row="1" 
+                         GroupName="ImageGroup">
+                <RadioButton.Content>
+                    <Image Height="113" Width="140"
+                           Source="C:\Users\Александр\Desktop\photo\list11.png"/>
+                </RadioButton.Content>
+            </RadioButton>
+
+            <RadioButton x:Name="net_button2"  Height="110" Width="150" 
+                         Margin="10,140,175,10" Grid.Row="1" 
+                         GroupName="ImageGroup">
+                <RadioButton.Content>
+                    <Image Height="107" Width="140"
+                           Source="C:\Users\Александр\Desktop\photo\list1.png" />
+                </RadioButton.Content>
+            </RadioButton>
+
+            <RadioButton x:Name="net_button3" 
+                         Height="110" Width="150" 
+                         Margin="170,140,20,20" Grid.Row="1" 
+                         GroupName="ImageGroup" >
+                <RadioButton.Content>
+                    <Image Height="100" Width="130"  
+                           Source="C:\Users\Александр\Desktop\photo\list.png"/>
+                </RadioButton.Content>
+            </RadioButton>
+
+            <Button x:Name="horosho" Grid.Row="2" 
+                    Height="20" Width="80" 
+                    Margin="75,0,85,10" Content="Вход"
+                    Background="White" Click="Pasword_client"/>
+        </Grid>
+    </Grid>
+</Window>
