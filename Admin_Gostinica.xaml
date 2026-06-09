@@ -16,7 +16,7 @@
             <RowDefinition Height="25"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="550"/>
@@ -25,30 +25,40 @@
         <Button Height="20" Width="20" Margin="101,1,0,0"
                 Content="x" Foreground="White" 
                 Background="Transparent" Grid.Column="2"
-                Opacity="1" FontSize="6" Click="exit_client_vxod"/>
+                Opacity="1" FontSize="15" Click="exit_client_vxod"/>
         <Grid Grid.Row="1" Grid.Column="1" Opacity="0.9" Background="#315E59" Margin="0,-27,0,0">
             <ListBox x:Name="listRooms"
-                     Height="400" Margin="0,52,0,0"
-                     SelectionMode="Single"
-         >
+        Height="400" Margin="0,52,0,0"
+        SelectionMode="Single">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="White" />
-                            <TextBlock Grid.Column="1" Text="{Binding StatusDisplay}" Margin="10,0,0,0" Foreground="LightGray" VerticalAlignment="Center"/>
-                        </Grid>
+                        <StackPanel>
+                            <!-- Основная строка: Номер и Статус -->
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Name}" 
+                                FontWeight="Bold" 
+                                Foreground="White" 
+                                Margin="5,0,5,0"/>
+                                <TextBlock Text="{Binding StatusDisplay}" 
+                                Foreground="LightGray" 
+                                VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <!-- Строка ниже: Категория -->
+                            <TextBlock Text="{Binding CategoryName}" 
+                            FontStyle="Italic" 
+                            Foreground="Gray" 
+                            Margin="15,0,0,5"/>
+                            <!-- Отступ слева, чтобы было понятно, что это подзаголовок -->
+                        </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
         </Grid>
         <Button x:Name="redactor_btn" Grid.Column="1" Height="20" Width="100" 
-                Content="Редоктировать" Margin="200,5,0,0" Click="redactor_click"  />
+                Content="Редоктировать" Margin="319,15,131,415" Click="redactor_click" Grid.RowSpan="2"  />
         <Button x:Name="Add_btn" Grid.Column="1" Height="20" Width="100" 
-                Content="Добавить" Margin="420,5,0,0" Click="Add_click" />
+                Content="Добавить" Margin="440,15,10,415" Click="Add_click" Grid.RowSpan="2" />
 
     </Grid>
 </Window>

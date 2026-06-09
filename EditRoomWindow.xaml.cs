@@ -22,30 +22,47 @@ namespace Gostinica
         public EditRoomWindow(Room roomToEdit = null)
         {
             InitializeComponent();
+            // 1. Заполняем ComboBox списком категорий из DataManager
+            cbCategory.ItemsSource = DataManager._categories;
+
             if (roomToEdit != null)
             {
-                // Режим РЕДАКТИРОВАНИЯ существующего номера
+                // --- РЕЖИМ РЕДАКТИРОВАНИЯ ---
                 _roomToEdit = roomToEdit;
 
                 tbName.Text = _roomToEdit.Name;
                 tbCapacity.Text = _roomToEdit.Capacity.ToString();
                 tbPrice.Text = _roomToEdit.PricePerNight.ToString();
 
-                // Слушаем изменения в полях ввода
+                // Устанавливаем выбранный элемент в ComboBox по CategoryId комнаты
+                cbCategory.SelectedValue = _roomToEdit.CategoryId;
+
+                // Слушаем изменения во всех полях ввода
                 tbName.TextChanged += (s, e) => _isDirty = true;
                 tbCapacity.TextChanged += (s, e) => _isDirty = true;
                 tbPrice.TextChanged += (s, e) => _isDirty = true;
+                cbCategory.SelectionChanged += (s, e) => _isDirty = true;
             }
             else
             {
-                // Режим ДОБАВЛЕНИЯ нового номера (создаем пустой объект)
+                // --- РЕЖИМ ДОБАВЛЕНИЯ ---
                 _roomToEdit = new Room { Status = 0 }; // По умолчанию свободен
+
+                // Можно установить категорию по умолчанию (например, первую в списке)
+                if (DataManager._categories.Any())
+                    cbCategory.SelectedIndex = 0;
+
+                // Слушаем изменения во всех полях ввода
+                tbName.TextChanged += (s, e) => _isDirty = true;
+                tbCapacity.TextChanged += (s, e) => _isDirty = true;
+                tbPrice.TextChanged += (s, e) => _isDirty = true;
+                cbCategory.SelectionChanged += (s, e) => _isDirty = true;
             }
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            // Сохраняем данные из полей в объект комнаты
+            // Валидация всех полей
             if (!int.TryParse(tbCapacity.Text, out int capacity))
             {
                 MessageBox.Show("Вместимость должна быть целым числом.");
@@ -58,9 +75,21 @@ namespace Gostinica
                 return;
             }
 
+            // Проверяем, выбрана ли категория в ComboBox
+            if (cbCategory.SelectedItem == null)
+            {
+                MessageBox.Show("Пожалуйста, выберите категорию номера.");
+                return;
+            }
+
+            // Сохраняем данные из полей в объект комнаты
             _roomToEdit.Name = tbName.Text;
             _roomToEdit.Capacity = capacity;
             _roomToEdit.PricePerNight = price;
+
+            // Сохраняем ID выбранной категории.
+            // SelectedValuePath="Id" позволяет нам напрямую обращаться к Id.
+            _roomToEdit.CategoryId = (int)cbCategory.SelectedValue;
 
             DialogResult = true; // Успешное закрытие окна с результатом "ОК"
             this.Close();
@@ -68,7 +97,7 @@ namespace Gostinica
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            if (_isDirty) // Если данные менялись...
+            if (_isDirty)
             {
                 var result = MessageBox.Show("Точно хотите выйти без сохранения?", "Подтверждение", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
@@ -77,7 +106,7 @@ namespace Gostinica
                     this.Close();
                 }
             }
-            else // Если данные не менялись...
+            else
             {
                 DialogResult = false;
                 this.Close();

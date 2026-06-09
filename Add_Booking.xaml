@@ -6,15 +6,18 @@
         xmlns:local="clr-namespace:Gostinica"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="Бронирование" Height="350" Width="400">
+        Title="Бронирование" Height="330" Width="400" WindowStyle="None">
+    <Window.Background>
+        <ImageBrush ImageSource="C:\Users\Александр\Desktop\photo\domik1.png"/>
+    </Window.Background>
     <Grid Margin="20">
         <StackPanel>
-            <TextBlock Text="Данные гостя:" FontWeight="Bold" Margin="0,10,0,5"/>
+            <TextBlock Text="Данные гостя:" FontWeight="Bold" Margin="0,10,0,5" Background="#315E59"/>
 
-            <TextBlock Text="Полное имя:"/>
+            <TextBlock Text="Полное имя:" Background="#315E59"/>
             <TextBox x:Name="tbFullName" Margin="0,0,0,10" Height="25"/>
 
-            <TextBlock Text="Номер телефона:"/>
+            <TextBlock Text="Номер телефона:" Background="#315E59"/>
             <TextBox x:Name="tbPhoneNumber" Margin="0,0,0,20" Height="25"/>
 
             <DatePicker x:Name="dpCheckIn" SelectedDate="{x:Null}" DisplayDateStart="{x:Static sys:DateTime.Today}" Margin="0,0,0,10"/>

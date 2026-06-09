@@ -38,39 +38,54 @@ namespace Gostinica
                 MessageBox.Show("Пожалуйста, заполните все поля.");
                 return;
             }
+            DateTime checkInDate = dpCheckIn.SelectedDate.Value;
+            DateTime checkOutDate = dpCheckOut.SelectedDate.Value;
 
-            // 2. Создаем НОВОГО гостя с введенными данными
+            // 2. Проверяем, что даты логичны
+            if (checkOutDate <= checkInDate)
+            {
+                MessageBox.Show("Дата выезда должна быть позже даты заезда.");
+                return;
+            }
+
+            // 3. ПРОВЕРКА НА НАЛИЧИЕ ДРУГОЙ БРОНИ (ГЛАВНОЕ ИЗМЕНЕНИЕ)
+            bool isAvailable = DataManager.IsRoomAvailableForDates(_selectedRoom.Id, checkInDate, checkOutDate);
+
+            if (!isAvailable)
+            {
+                MessageBox.Show("Извините, этот номер уже забронирован на выбранные даты. Пожалуйста, выберите другой номер или другие даты.");
+                return; // Выходим из метода, ничего не создаем
+            }
+            // 4. Если номер свободен, создаем гостя и бронь
             var newGuest = new Gost
             {
                 FullName = tbFullName.Text,
                 PhoneNumber = tbPhoneNumber.Text
             };
-
-            // 3. Добавляем гостя в общий список через DataManager
             DataManager.AddGuest(newGuest);
 
-            // 4. Создаем бронь, используя ID только что добавленного гостя
             var newBooking = new Booking
             {
                 RoomId = _selectedRoom.Id,
-                GuestId = newGuest.Id, // Используем ID нового гостя
-                CheckInDate = dpCheckIn.SelectedDate.Value,
-                CheckOutDate = dpCheckOut.SelectedDate.Value,
-                Status = "Ожидание"
+                GuestId = newGuest.Id,
+                CheckInDate = checkInDate,
+                CheckOutDate = checkOutDate,
+                Status = "Ожидание" // Или "Забронировано вами"
             };
-            // 5. Пытаемся добавить бронь
-            bool success = DataManager.AddBooking(newBooking);
 
-            if (success)
+            // Добавление брони теперь всегда будет успешным, так как мы проверили доступность выше
+            DataManager.AddBooking(newBooking);
+
+            // Обновляем статус номера в самом объекте комнаты
+            var roomToUpdate = DataManager.GetRooms().FirstOrDefault(r => r.Id == _selectedRoom.Id);
+            if (roomToUpdate != null)
             {
-                MessageBox.Show("Бронь успешно создана!");
-                this.DialogResult = true; // Успешное закрытие
-                this.Close();
+                roomToUpdate.Status = 1; // Статус "Забронирован"
             }
-            else
-            {
-                MessageBox.Show("Ошибка: Дата выезда должна быть позже даты заезда.");
-            }
+
+            MessageBox.Show("Бронь успешно создана!");
+            this.DialogResult = true;
+            this.Close();
         }
         
         private void btnCancel_Click(object sender, RoutedEventArgs e)

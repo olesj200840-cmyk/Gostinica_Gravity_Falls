@@ -23,9 +23,23 @@ namespace Gostinica
             // Заполняем базу тестовыми данными при запуске
             DataManager.SeedData();
 
-            // Привязываем к ListBox только свободные номера (Статус == 0)
-            // Используем ToList(), чтобы зафиксировать выборку на момент открытия окна.
-            listRooms.ItemsSource = DataManager.GetRooms().Where(r => r.Status == 0).ToList();
+            // 1. Берем все свободные комнаты
+            var freeRooms = DataManager.GetRooms().Where(r => r.Status == 0).ToList();
+
+            // 2. Для каждой комнаты создаем анонимный объект с нужными нам свойствами
+            var roomsForDisplay = freeRooms.Select(room => new
+            {
+                // Берем свойства напрямую из объекта Room
+                room.Name,
+                room.StatusDisplay,
+
+                // Находим категорию по ID и берем её название
+                // Если категории нет, показываем "Неизвестно"
+                CategoryName = DataManager._categories.FirstOrDefault(c => c.Id == room.CategoryId)?.Name ?? "Неизвестно"
+            }).ToList();
+
+            // 3. Привязываем к ListBox наш новый список анонимных объектов
+            listRooms.ItemsSource = roomsForDisplay;
 
         }
 
@@ -38,24 +52,37 @@ namespace Gostinica
 
         private void ListRooms_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            // selectedRoom теперь существует в этом контексте, так как мы берем его из listRooms.SelectedItem
-            var selectedRoom = listRooms.SelectedItem as Room;
+            var selectedItem = listRooms.SelectedItem;
 
-            if (selectedRoom != null && selectedRoom.Status == 0) // Проверяем, что номер свободен
+            if (selectedItem != null)
             {
-                // Открываем окно бронирования, передавая выбранный номер
-                var addBookingWnd = new Add_Booking(selectedRoom);
-                addBookingWnd.Owner = this;
-                addBookingWnd.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                // Нам нужно получить исходный объект Room, чтобы работать с ним дальше.
+                // Для этого сначала получаем имя из выбранного объекта.
+                var selectedName = selectedItem.GetType().GetProperty("Name").GetValue(selectedItem).ToString();
 
-                bool? result = addBookingWnd.ShowDialog(); // Ждем закрытия окна
+                // Ищем исходный объект Room в главном списке по этому имени
+                var originalRoom = DataManager.GetRooms().FirstOrDefault(r => r.Name == selectedName);
 
-                // Если бронь создана успешно...
-                if (result == true)
+                if (originalRoom != null && originalRoom.Status == 0)
                 {
-                    // Обновляем список номеров в главном окне.
-                    listRooms.ItemsSource = DataManager.GetRooms().Where(r => r.Status == 0).ToList();
-                    listRooms.Items.Refresh();
+                    var add_Booking = new Add_Booking(originalRoom);
+                    add_Booking.Owner = this;
+                    add_Booking.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                    bool? result = add_Booking.ShowDialog();
+
+                    if (result == true)
+                    {
+                        // При успешном бронировании пересоздаем список для отображения
+                        // (т.к. статус комнаты изменился и она должна исчезнуть из списка)
+                        var roomsForDisplay = DataManager.GetRooms().Where(r => r.Status == 0).Select(room => new
+                        {
+                            room.Name,
+                            room.StatusDisplay,
+                            CategoryName = DataManager._categories.FirstOrDefault(c => c.Id == room.CategoryId)?.Name ?? "Неизвестно"
+                        }).ToList();
+
+                        listRooms.ItemsSource = roomsForDisplay;
+                    }
                 }
             }
         }

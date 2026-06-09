@@ -8,7 +8,7 @@
         Title=""  
         Height="300" Width="300" WindowStyle="None" 
         ResizeMode="NoResize"
-        >
+        WindowStartupLocation="CenterScreen">
 
     <Window.Background>
             <ImageBrush ImageSource="C:\Users\Александр\Desktop\von2.png"/>
@@ -18,13 +18,10 @@
             <RowDefinition Height="25"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Button Height="12" Width="12" Margin="280,1,8,4"
-                BorderThickness="0" Click="exit_admin_vxod">
-            <Button.Background>
-                <ImageBrush ImageSource="C:\Users\Александр\Desktop\photo\icon-icons.png"/>
-            </Button.Background>
-            
-        </Button>
+        <Button Height="12" Width="12" Margin="280,1,0,0"
+        Content="x" Foreground="White" 
+        Background="Transparent"
+        Opacity="1" FontSize="6" Click="exit_admin_vxod"/>
         <Grid Grid.Row="1" Margin="20,60,20,70" Opacity="1" Background="#344B73">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>

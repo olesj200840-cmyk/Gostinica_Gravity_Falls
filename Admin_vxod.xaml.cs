@@ -17,6 +17,7 @@ namespace Gostinica
     /// </summary>
     public partial class Admin_vxod : Window
     {
+        private ClientMain _clientMain;
         private const string Olesya = "asd123zxc";
         private const string Veronika = "pyps";
         public Admin_vxod()
@@ -46,6 +47,7 @@ namespace Gostinica
             Button_vxodAdmin.Visibility = Visibility.Collapsed;
             vod_posword.Visibility = Visibility.Collapsed;
             Privet.Visibility = Visibility.Collapsed;
+            MessageText.Visibility= Visibility.Collapsed;
 
             // показываем текстовое сообщение
             MessageTextBlockAdmin.Visibility = Visibility.Visible;
@@ -53,13 +55,14 @@ namespace Gostinica
         // 3. Метод для плавного перехода между окнами
         private async void CloseAccept()
         {
+            
             // Скрываем все элементы интерфейса
             HideAllInterfaceElements();
             Admin_Gostinica admin_gostinica = new Admin_Gostinica();
 
             // Ждем 1 секунду (1000 миллисекунд), не блокируя UI-поток
             await Task.Delay(1000);
-
+            
             this.Close();
             MainWindow.Instance?.Close(); // '?' проверяет на null перед вызовом Close()
 

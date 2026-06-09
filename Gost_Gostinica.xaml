@@ -24,7 +24,7 @@
         <Button Height="20" Width="20" Margin="101,1,0,0"
                 Content="x" Foreground="White" 
                 Background="Transparent" Grid.Column="2"
-                Opacity="1" FontSize="6" Click="exit_client_vxod"/>
+                Opacity="1" FontSize="15" Click="exit_client_vxod"/>
         <Grid Grid.Row="1" Grid.Column="1"  Opacity="0.9" 
               Background="#315E59" Margin="0,-27,0,0">
             <TextBlock  Text="Gravity Falss" 
@@ -37,14 +37,25 @@
                     MouseDoubleClick="ListRooms_MouseDoubleClick">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="White" />
-                            <TextBlock Grid.Column="1" Text="{Binding StatusDisplay}" Margin="10,0,0,0" Foreground="LightGray" VerticalAlignment="Center"/>
-                        </Grid>
+                        <StackPanel>
+                            <!-- Основная строка: Номер и Статус -->
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Name}" 
+                                            FontWeight="Bold" 
+                                            Foreground="White" 
+                                            Margin="5,0,5,0"/>
+                                <TextBlock Text="{Binding StatusDisplay}" 
+                                            Foreground="LightGray" 
+                                            VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <!-- Строка ниже: Категория -->
+                            <TextBlock Text="{Binding CategoryName}" 
+                                        FontStyle="Italic" 
+                                        Foreground="Gray" 
+                                        Margin="15,0,0,5"/>
+                            <!-- Отступ слева, чтобы было понятно, что это подзаголовок -->
+                        </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>

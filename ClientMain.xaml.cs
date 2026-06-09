@@ -17,6 +17,7 @@ namespace Gostinica
     /// </summary>
     public partial class ClientMain : Window
     {
+        private Admin_vxod _admin_Vxod;
         public ClientMain()
         {
             InitializeComponent();
@@ -53,6 +54,7 @@ namespace Gostinica
         // Метод для плавного перехода между окнами
         private async void CloseAccept()
         {
+            
             // Скрываем все элементы интерфейса
             HideAllInterfaceElements();
             // Создаем и показываем новое окно
