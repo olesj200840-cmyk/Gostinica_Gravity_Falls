@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Gostinica"
         mc:Ignorable="d"
-        Title="Admin_Gostinica" Height="450" Width="800"
+        Title="Гость_Gostinica" Height="450" Width="800"
         ResizeMode="NoResize" WindowStyle="None"
         WindowStartupLocation="CenterScreen">
     <Window.Background>
@@ -21,12 +21,16 @@
             <ColumnDefinition Width="550"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+       
         <Button Height="20" Width="20" Margin="101,1,0,0"
                 Content="x" Foreground="White" 
                 Background="Transparent" Grid.Column="2"
                 Opacity="1" FontSize="15" Click="exit_client_vxod"/>
         <Grid Grid.Row="1" Grid.Column="1"  Opacity="0.9" 
               Background="#315E59" Margin="0,-27,0,0">
+            <Button Grid.Column="1" Grid.Row="1" 
+                    Height="20" Width="80" Background="White"
+                    Margin="460,10,10,395" Content="История" Click="History_click"/>
             <TextBlock  Text="Gravity Falss" 
                         FontSize="36" Height="50" Margin="0,1,270,401" 
                         FontWeight="Bold" FontFamily="MS Reference Sans Serif"
@@ -42,19 +46,19 @@
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding Name}" 
                                             FontWeight="Bold" 
-                                            Foreground="White" 
+                                            Foreground="#315E59" 
                                             Margin="5,0,5,0"/>
-                                <TextBlock Text="{Binding StatusDisplay}" 
-                                            Foreground="LightGray" 
-                                            VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding CategoryName}" 
+                                            FontStyle="Italic" 
+                                            Foreground="Gray" 
+                                            Margin="15,0,0,5"/>
                             </StackPanel>
 
-                            <!-- Строка ниже: Категория -->
-                            <TextBlock Text="{Binding CategoryName}" 
-                                        FontStyle="Italic" 
+
+                            <TextBlock Text="{Binding StatusDisplay}" 
                                         Foreground="Gray" 
-                                        Margin="15,0,0,5"/>
-                            <!-- Отступ слева, чтобы было понятно, что это подзаголовок -->
+                                        VerticalAlignment="Center"/>
+
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

@@ -33,8 +33,7 @@ namespace Gostinica
                 room.Name,
                 room.StatusDisplay,
 
-                // Находим категорию по ID и берем её название
-                // Если категории нет, показываем "Неизвестно"
+                // Находим категорию по ID в списке _categories и берем её название.
                 CategoryName = DataManager._categories.FirstOrDefault(c => c.Id == room.CategoryId)?.Name ?? "Неизвестно"
             }).ToList();
 
@@ -56,7 +55,7 @@ namespace Gostinica
 
             if (selectedItem != null)
             {
-                // Нам нужно получить исходный объект Room, чтобы работать с ним дальше.
+                // нужно получить исходный объект Room, чтобы работать с ним дальше.
                 // Для этого сначала получаем имя из выбранного объекта.
                 var selectedName = selectedItem.GetType().GetProperty("Name").GetValue(selectedItem).ToString();
 
@@ -78,12 +77,32 @@ namespace Gostinica
                         {
                             room.Name,
                             room.StatusDisplay,
-                            CategoryName = DataManager._categories.FirstOrDefault(c => c.Id == room.CategoryId)?.Name ?? "Неизвестно"
+                            CategoryName = DataManager.GetRooms().FirstOrDefault(c => c.Id == room.CategoryId)?.Name ?? "Неизвестно"
                         }).ToList();
 
                         listRooms.ItemsSource = roomsForDisplay;
                     }
                 }
+            }
+        }
+
+        private void History_click(object sender, RoutedEventArgs e)
+        {
+            // Получаем выбранный номер из списка
+            var selectedItem = listRooms.SelectedItem;
+            if (selectedItem == null) return; // Проверка на случай, если ничего не выбрано
+
+            // Извлекаем имя комнаты из выбранного элемента
+            var roomName = selectedItem.GetType().GetProperty("Name").GetValue(selectedItem).ToString();
+
+            // Ищем реальный объект Room в базе данных DataManager
+            var originalRoom = DataManager.GetRooms().FirstOrDefault(r => r.Name == roomName);
+
+            if (originalRoom != null)
+            {
+                // Открываем ОКНО ИСТОРИИ НОМЕРА, передавая найденную комнату
+                GuestBookingHistory history = new GuestBookingHistory();
+                history.Show();
             }
         }
     }

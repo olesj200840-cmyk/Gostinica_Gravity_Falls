@@ -11,6 +11,6 @@ namespace Gostinica
         // Название категории
         public string Name { get; set; }
         // Описание (например, "Телевизор, кондиционер")
-        public string Description { get; set; }
+        
     }
 }

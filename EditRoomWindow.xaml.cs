@@ -22,12 +22,12 @@ namespace Gostinica
         public EditRoomWindow(Room roomToEdit = null)
         {
             InitializeComponent();
-            // 1. Заполняем ComboBox списком категорий из DataManager
-            cbCategory.ItemsSource = DataManager._categories;
+            //Заполняем ComboBox списком категорий из DataManager
+            cbCategory.ItemsSource = DataManager.GetRooms();
 
             if (roomToEdit != null)
             {
-                // --- РЕЖИМ РЕДАКТИРОВАНИЯ ---
+                
                 _roomToEdit = roomToEdit;
 
                 tbName.Text = _roomToEdit.Name;
@@ -45,11 +45,11 @@ namespace Gostinica
             }
             else
             {
-                // --- РЕЖИМ ДОБАВЛЕНИЯ ---
-                _roomToEdit = new Room { Status = 0 }; // По умолчанию свободен
+                
+                _roomToEdit = new Room { }; // По умолчанию свободен
 
                 // Можно установить категорию по умолчанию (например, первую в списке)
-                if (DataManager._categories.Any())
+                if (DataManager.GetRooms().Any())
                     cbCategory.SelectedIndex = 0;
 
                 // Слушаем изменения во всех полях ввода
@@ -62,37 +62,57 @@ namespace Gostinica
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            // Валидация всех полей
+            //  Базовая проверка: являются ли введенные данные числами?
             if (!int.TryParse(tbCapacity.Text, out int capacity))
             {
                 MessageBox.Show("Вместимость должна быть целым числом.");
+                tbCapacity.Focus();
                 return;
             }
 
             if (!decimal.TryParse(tbPrice.Text, out decimal price))
             {
                 MessageBox.Show("Цена должна быть числом.");
+                tbPrice.Focus();
                 return;
             }
 
-            // Проверяем, выбрана ли категория в ComboBox
-            if (cbCategory.SelectedItem == null)
+            //  Проверка на выбранную категорию номера
+            if (cbCategory.SelectedItem is not Category selectedCategory)
             {
                 MessageBox.Show("Пожалуйста, выберите категорию номера.");
+                cbCategory.Focus();
                 return;
             }
 
-            // Сохраняем данные из полей в объект комнаты
+            //  Проверка на максимальное количество людей (до 3 человек)
+            const int MAX1 = 3;
+            if (capacity > MAX1 || capacity < 1)
+            {
+                MessageBox.Show($"Ошибка! Максимальное количество людей в одну комнату не может превышать {MAX1} человек.");
+                tbCapacity.SelectAll();
+                tbCapacity.Focus();
+                return;
+            }
+
+            //  Проверка на максимальную стоимость (до 67000)
+            const decimal MAX = 67000m;
+            if (price > MAX || price < 1)
+            {
+                MessageBox.Show($"Ошибка! Цена за номер не может превышать {MAX} рублей.");
+                tbPrice.SelectAll();
+                tbPrice.Focus();
+                return;
+            }
+
+            // Если все проверки пройдены, сохраняем данные
             _roomToEdit.Name = tbName.Text;
             _roomToEdit.Capacity = capacity;
             _roomToEdit.PricePerNight = price;
+            _roomToEdit.CategoryId = selectedCategory.Id;
 
-            // Сохраняем ID выбранной категории.
-            // SelectedValuePath="Id" позволяет нам напрямую обращаться к Id.
-            _roomToEdit.CategoryId = (int)cbCategory.SelectedValue;
-
-            DialogResult = true; // Успешное закрытие окна с результатом "ОК"
-            this.Close();
+            DialogResult = true;
+            Close();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

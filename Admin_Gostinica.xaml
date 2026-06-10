@@ -36,29 +36,35 @@
                             <!-- Основная строка: Номер и Статус -->
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding Name}" 
-                                FontWeight="Bold" 
-                                Foreground="White" 
-                                Margin="5,0,5,0"/>
-                                <TextBlock Text="{Binding StatusDisplay}" 
-                                Foreground="LightGray" 
-                                VerticalAlignment="Center"/>
+                                            FontWeight="Bold" 
+                                             Foreground="#315E59" 
+                                             Margin="5,0,5,0"/>
+                                <TextBlock Text="{Binding CategoryName}" 
+                                            FontStyle="Italic" 
+                                            Foreground="Gray" 
+                                            Margin="15,0,0,5"/>
                             </StackPanel>
 
-                            <!-- Строка ниже: Категория -->
-                            <TextBlock Text="{Binding CategoryName}" 
-                            FontStyle="Italic" 
-                            Foreground="Gray" 
-                            Margin="15,0,0,5"/>
-                            <!-- Отступ слева, чтобы было понятно, что это подзаголовок -->
+                            
+                            <TextBlock Text="{Binding StatusDisplay}" 
+                                        Foreground="Gray" 
+                                        VerticalAlignment="Center"/>
+                           
+                            
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
         </Grid>
         <Button x:Name="redactor_btn" Grid.Column="1" Height="20" Width="100" 
-                Content="Редоктировать" Margin="319,15,131,415" Click="redactor_click" Grid.RowSpan="2"  />
-        <Button x:Name="Add_btn" Grid.Column="1" Height="20" Width="100" 
+                Content="Редоктировать" 
+                Margin="319,15,131,415" 
+                Click="redactor_click" 
+                Grid.RowSpan="2" Background="White" />
+        <Button x:Name="Add_btn" Grid.Column="1" 
+                Height="20" Width="100" Background="White"
                 Content="Добавить" Margin="440,15,10,415" Click="Add_click" Grid.RowSpan="2" />
 
     </Grid>
 </Window>
+ 

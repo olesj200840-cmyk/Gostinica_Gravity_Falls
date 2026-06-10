@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -9,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace Gostinica
 {
@@ -24,7 +26,6 @@ namespace Gostinica
         {
             InitializeComponent();
             _selectedRoom = selectedRoom;
-            this.Title = $"Бронирование номера: {_selectedRoom.Name}";
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -62,6 +63,45 @@ namespace Gostinica
                 FullName = tbFullName.Text,
                 PhoneNumber = tbPhoneNumber.Text
             };
+
+            string roomName = tbFullName.Text.Trim(); // Убираем лишние пробелы по краям
+
+            if (string.IsNullOrWhiteSpace(roomName))
+            {
+                MessageBox.Show("Имя комнаты не может быть пустым.");
+                tbFullName.Focus();
+                return;
+            }
+
+            // Шаблон: только буквы русского алфавита (заглавные и строчные), дефис и пробел.
+            // ^ - начало строки
+            // [А-ЯЁа-яё\- ]+ - один или более символов из набора (буквы, дефис, пробел)
+            // $ - конец строки
+            const string NAME_PATTERN = @"^[А-ЯЁа-яё\- ]+$";
+
+            if (!Regex.IsMatch(roomName, NAME_PATTERN))
+            {
+                MessageBox.Show("Ошибка! Имя должно содержать только русские буквы, дефисы и пробелы.");
+                tbFullName.SelectAll();
+                tbFullName.Focus();
+                return;
+            }
+            string phoneNumber = tbPhoneNumber.Text; // Предполагаем, что у вас есть текстовое поле tbPhone
+
+            // Шаблон: начинается с '+', за которым следует от 7 до 15 цифр.
+            // \+ - символ плюса (экранирован, так как '+' спецсимвол в regex)
+            // \d{7,15} - от 7 до 15 цифр
+            const string PHONE_PATTERN = @"^\+\d{7,15}$";
+
+            if (!Regex.IsMatch(phoneNumber, PHONE_PATTERN))
+            {
+                MessageBox.Show("Ошибка! Номер должен начинаться со знака '+' и содержать от 7 до 15 цифр (например, +79991234567).");
+                tbPhoneNumber.SelectAll();
+                tbPhoneNumber.Focus();
+                return;
+            }
+
+
             DataManager.AddGuest(newGuest);
 
             var newBooking = new Booking

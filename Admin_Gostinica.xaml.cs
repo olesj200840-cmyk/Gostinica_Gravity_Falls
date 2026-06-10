@@ -106,7 +106,7 @@ namespace Gostinica
             {
                 room.Name,
                 room.StatusDisplay,
-                CategoryName = DataManager._categories.FirstOrDefault(c => c.Id == room.CategoryId)?.Name ?? "Неизвестно"
+                CategoryName = DataManager.GetRooms().FirstOrDefault(c => c.Id == room.CategoryId)?.Name ?? "Неизвестно"
             }).ToList();
 
             listRooms.ItemsSource = roomsForDisplay;

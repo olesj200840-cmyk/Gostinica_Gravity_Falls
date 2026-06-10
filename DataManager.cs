@@ -21,6 +21,10 @@ namespace Gostinica
         {
             return _rooms;
         }
+        public static List<Category> GetCategories()
+        {
+            return _categories;
+        }
         // Добавить новый номер. Принимает объект Room.
         public static void AddRoom(Room room)
         {

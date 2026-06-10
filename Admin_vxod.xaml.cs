@@ -17,12 +17,13 @@ namespace Gostinica
     /// </summary>
     public partial class Admin_vxod : Window
     {
-        private ClientMain _clientMain;
+        public static Admin_vxod _admin_vxod;
         private const string Olesya = "asd123zxc";
         private const string Veronika = "pyps";
         public Admin_vxod()
         {
             InitializeComponent();
+            _admin_vxod = this; 
         }
 
         private void Pasword_Admin(object sender, RoutedEventArgs e)
@@ -63,7 +64,9 @@ namespace Gostinica
             // Ждем 1 секунду (1000 миллисекунд), не блокируя UI-поток
             await Task.Delay(1000);
             
+            
             this.Close();
+            ClientMain._clientMain?.Close();
             MainWindow.Instance?.Close(); // '?' проверяет на null перед вызовом Close()
 
             admin_gostinica.Show();

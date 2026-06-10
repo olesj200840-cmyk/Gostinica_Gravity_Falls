@@ -1,0 +1,25 @@
+﻿<Window x:Class="Gostinica.GuestBookingHistory"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gostinica"
+        mc:Ignorable="d"
+        Title="История бронирований" Height="450" Width="800">
+    <Grid>
+        <ListBox x:Name="listHistory" Margin="10">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="0,5">
+                        <TextBlock Text="{Binding RoomName}" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding CheckInDate, StringFormat='Дата заезда: {0:dd.MM.yyyy}'}"/>
+                        <TextBlock Text="{Binding CheckOutDate, StringFormat='Дата выезда: {0:dd.MM.yyyy}'}"/>
+                        <TextBlock Text="{Binding GuestName}"/>
+                        <TextBlock Text="{Binding RoomPrice, StringFormat='Цена за ночь: {0:C0}'}"/>
+                        <TextBlock Text="{Binding RoomType}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Window>

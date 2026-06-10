@@ -12,20 +12,20 @@
     </Window.Background>
     <Grid Margin="20">
         <StackPanel>
-            <TextBlock Text="Данные гостя:" FontWeight="Bold" Margin="0,10,0,5" Background="#315E59"/>
+            <TextBlock Text="Данные гостя:" FontWeight="Bold" Margin="0,10,0,5" Background="#315E59" Foreground="White"/>
 
-            <TextBlock Text="Полное имя:" Background="#315E59"/>
+            <TextBlock Text="Полное имя:" Background="#315E59" Foreground="White"/>
             <TextBox x:Name="tbFullName" Margin="0,0,0,10" Height="25"/>
 
-            <TextBlock Text="Номер телефона:" Background="#315E59"/>
+            <TextBlock Text="Номер телефона:" Background="#315E59" Foreground="White"/>
             <TextBox x:Name="tbPhoneNumber" Margin="0,0,0,20" Height="25"/>
 
             <DatePicker x:Name="dpCheckIn" SelectedDate="{x:Null}" DisplayDateStart="{x:Static sys:DateTime.Today}" Margin="0,0,0,10"/>
             <DatePicker x:Name="dpCheckOut" SelectedDate="{x:Null}" DisplayDateStart="{x:Static sys:DateTime.Today}" Margin="0,0,0,20"/>
 
-            <Button Content="Забронировать" Width="120" HorizontalAlignment="Right" Click="btnSave_Click" Margin="0,0,0,10"/>
+            <Button Content="Забронировать" Width="120" HorizontalAlignment="Right" Click="btnSave_Click" Margin="0,0,0,10" Background="White"/>
 
-            <Button Content="Отмена" Width="120" HorizontalAlignment="Right" Click="btnCancel_Click" />
+            <Button Content="Отмена" Width="120" HorizontalAlignment="Right" Click="btnCancel_Click" Background="White" />
         </StackPanel>
     </Grid>
 </Window>

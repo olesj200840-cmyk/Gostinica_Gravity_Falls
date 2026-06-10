@@ -17,10 +17,11 @@ namespace Gostinica
     /// </summary>
     public partial class ClientMain : Window
     {
-        private Admin_vxod _admin_Vxod;
+        public static ClientMain _clientMain;
         public ClientMain()
         {
             InitializeComponent();
+            _clientMain=this;
         }
 
         private void Pasword_client(object sender, RoutedEventArgs e)
@@ -64,6 +65,7 @@ namespace Gostinica
             await Task.Delay(1000);
 
             // Безопасно закрываем текущее окно и главное окно
+            Admin_vxod._admin_vxod?.Close();
             this.Close();
             MainWindow.Instance?.Close(); // '?' проверяет на null перед вызовом Close()
 
@@ -73,6 +75,7 @@ namespace Gostinica
         {
             HideAllInterfaceElements();
             await Task.Delay(1000);
+            Admin_vxod._admin_vxod?.Close();
             this.Close();
             MainWindow.Instance?.Close(); 
         }
