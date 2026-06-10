@@ -98,17 +98,40 @@ namespace Gostinica
             }
         }
 
-        // --- МЕТОД ДЛЯ ОБНОВЛЕНИЯ СПИСКА ---
+        
         // Чтобы не дублировать код обновления ListBox, вынесем его в отдельный метод.
         private void RefreshRoomList()
         {
-            var roomsForDisplay = DataManager.GetRooms().Select(room => new
-            {
-                room.Name,
-                room.StatusDisplay,
-                CategoryName = DataManager.GetRooms().FirstOrDefault(c => c.Id == room.CategoryId)?.Name ?? "Неизвестно"
-            }).ToList();
+            // Шаг 1: Получаем полный список комнат из менеджера данных.
+            var allRooms = DataManager.GetRooms();
 
+            // Шаг 2: Для удобства создадим справочник категорий.
+            // Это нужно, чтобы быстро находить имя категории по её Id,
+            // не перебирая весь список категорий заново для каждой комнаты.
+            var categoryDict = DataManager._categories.ToDictionary(c => c.Id, c => c.Name);
+
+            // Шаг 3: Создаем новый список объектов специально для отображения в UI (ListBox).
+            // Мы берем данные из Room и дополняем их названием категории.
+            var roomsForDisplay = allRooms.Select(room => new
+            {
+                // Берем свойства напрямую из объекта комнаты.
+                room.Name,
+
+                // Вычисляем статус текстом. Проверяем значение поля Status.
+                StatusDisplay = room.Status switch
+                {
+                    0 => "Свободен",
+                    1 => "Забронирован",
+                    2 => "Занят",
+                    _ => "Неизвестный статус" // На случай, если появится новое число
+                },
+
+                // Ищем имя категории в нашем словаре.
+                // Если категория с таким Id не найдена, показываем "Неизвестно".
+                CategoryName = categoryDict.TryGetValue(room.CategoryId, out string catName) ? catName : "Неизвестно"
+            }).ToList(); // Выполняем запрос
+
+            // Шаг 4: Привязываем наш новый сформированный список к элементу управления на форме.
             listRooms.ItemsSource = roomsForDisplay;
         }
     }

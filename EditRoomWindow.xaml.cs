@@ -23,7 +23,7 @@ namespace Gostinica
         {
             InitializeComponent();
             //Заполняем ComboBox списком категорий из DataManager
-            cbCategory.ItemsSource = DataManager.GetRooms();
+            cbCategory.ItemsSource = DataManager._categories; ;
 
             if (roomToEdit != null)
             {

@@ -49,7 +49,7 @@ namespace Gostinica
                 return;
             }
 
-            // 3. ПРОВЕРКА НА НАЛИЧИЕ ДРУГОЙ БРОНИ (ГЛАВНОЕ ИЗМЕНЕНИЕ)
+            // 3. ПРОВЕРКА НА НАЛИЧИЕ ДРУГОЙ БРОНИ 
             bool isAvailable = DataManager.IsRoomAvailableForDates(_selectedRoom.Id, checkInDate, checkOutDate);
 
             if (!isAvailable)
