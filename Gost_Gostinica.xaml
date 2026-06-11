@@ -52,6 +52,10 @@
                                             FontStyle="Italic" 
                                             Foreground="Gray" 
                                             Margin="15,0,0,5"/>
+                                <TextBlock Text="{Binding RoomPricePerNight}" 
+                                            FontStyle="Italic" 
+                                            Foreground="Gray"
+                                            Margin="15,0,0,5"/>
                             </StackPanel>
 
 

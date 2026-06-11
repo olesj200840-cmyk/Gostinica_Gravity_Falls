@@ -34,7 +34,8 @@ namespace Gostinica
                 room.StatusDisplay,
 
                 // Находим категорию по ID в списке _categories и берем её название.
-                CategoryName = DataManager._categories.FirstOrDefault(c => c.Id == room.CategoryId)?.Name ?? "Неизвестно"
+                CategoryName = DataManager._categories.FirstOrDefault(c => c.Id == room.CategoryId)?.Name ?? "Неизвестно",
+                RoomPricePerNight = $"{room.PricePerNight:C} руб/ночь"
             }).ToList();
 
             // 3. Привязываем к ListBox наш новый список анонимных объектов

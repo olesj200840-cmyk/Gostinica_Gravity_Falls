@@ -128,7 +128,8 @@ namespace Gostinica
 
                 // Ищем имя категории в нашем словаре.
                 // Если категория с таким Id не найдена, показываем "Неизвестно".
-                CategoryName = categoryDict.TryGetValue(room.CategoryId, out string catName) ? catName : "Неизвестно"
+                CategoryName = categoryDict.TryGetValue(room.CategoryId, out string catName) ? catName : "Неизвестно",
+                RoomPricePerNight = $"{room.PricePerNight:C} руб/ночь" // :C - формат валюты
             }).ToList(); // Выполняем запрос
 
             // Шаг 4: Привязываем наш новый сформированный список к элементу управления на форме.
